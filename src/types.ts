@@ -29,7 +29,7 @@ export interface CompletedGame {
   winners: string[];
 }
 
-export const ROUND_ORDER: RoundType[] = ["pass", "klover", "dame", "grand", "kabal"];
+export const ROUND_ORDER: RoundType[] = ["pass", "klover", "kabal", "dame", "grand"];
 
 export const ROUND_LABELS: Record<RoundType, string> = {
   pass: "Passrunda",

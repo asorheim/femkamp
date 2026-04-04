@@ -32,18 +32,18 @@ export function Scoreboard({
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border">
+    <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border shadow-md shadow-black/10">
       {/* Totals row */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex justify-around w-full px-2 py-3"
+        className="flex flex-wrap justify-around w-full px-3 py-4 gap-2"
       >
         {players.map((p) => (
-          <div key={p.id} className="text-center">
-            <div className="text-xs text-muted-foreground">
+          <div key={p.id} className="text-center min-w-[60px]">
+            <div className="text-sm text-muted-foreground font-medium">
               {p.icon} {p.name}
             </div>
-            <div className={`text-xl font-bold ${getColor(totalScores[p.id] ?? 0)}`}>
+            <div className={`text-2xl font-extrabold tabular-nums ${getColor(totalScores[p.id] ?? 0)}`}>
               {totalScores[p.id] ?? 0}
             </div>
           </div>
@@ -52,7 +52,7 @@ export function Scoreboard({
 
       {/* Expanded breakdown */}
       {expanded && (
-        <div className="px-3 pb-3">
+        <div className="px-3 pb-3 overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
               <tr className="text-muted-foreground">
@@ -91,18 +91,18 @@ export function Scoreboard({
         </div>
       )}
 
-      {/* Round progress */}
-      <div className="flex justify-center gap-1.5 pb-2 px-2">
+      {/* Round progress pills */}
+      <div className="flex justify-center gap-2 pb-3 px-3 flex-wrap">
         {ROUND_ORDER.map((type, i) => (
           <button
             key={type}
             onClick={() => onGoToRound(i)}
-            className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
+            className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-all active:scale-90 ${
               i === currentRound
-                ? "bg-amber-500 text-black font-medium"
+                ? "bg-amber-500 text-black shadow-md shadow-amber-500/30"
                 : i < currentRound
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground"
+                  ? "bg-primary text-primary-foreground hover:brightness-110"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
           >
             {ROUND_LABELS[type].replace("runda", "")}

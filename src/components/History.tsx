@@ -26,9 +26,9 @@ export function History({ onBack }: HistoryProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 max-w-md mx-auto">
+    <div className="flex flex-col gap-5 p-6 max-w-md mx-auto">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Historikk</h2>
+        <h2 className="text-2xl font-extrabold tracking-tight">Historikk</h2>
         <Button variant="ghost" size="sm" onClick={onBack}>
           ← Tilbake
         </Button>
@@ -48,7 +48,7 @@ export function History({ onBack }: HistoryProps) {
             return (
               <div
                 key={game.id}
-                className="rounded-lg border border-border bg-card p-3"
+                className="rounded-xl border border-border bg-card p-4 shadow-md shadow-black/10"
               >
                 <div className="flex items-start justify-between">
                   <div>

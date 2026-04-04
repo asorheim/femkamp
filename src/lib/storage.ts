@@ -47,7 +47,7 @@ export function loadRecentPlayers(): Player[] {
 
 export function saveRecentPlayers(players: Player[]): void {
   const existing = loadRecentPlayers();
-  const newIds = new Set(players.map((p) => p.id));
-  const merged = [...players, ...existing.filter((p) => !newIds.has(p.id))].slice(0, MAX_RECENT_PLAYERS);
+  const newNames = new Set(players.map((p) => p.name.toLowerCase()));
+  const merged = [...players, ...existing.filter((p) => !newNames.has(p.name.toLowerCase()))].slice(0, MAX_RECENT_PLAYERS);
   localStorage.setItem(KEYS.recentPlayers, JSON.stringify(merged));
 }

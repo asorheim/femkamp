@@ -133,16 +133,22 @@ function App() {
         />
       )}
 
-      <div className="flex justify-center gap-3 p-4 pb-8">
+      <div className="flex justify-center gap-4 p-5 pb-10">
         {state.currentRound > 0 && (
           <Button
             variant="secondary"
+            size="lg"
+            className="rounded-xl font-semibold transition-transform active:scale-95"
             onClick={() => goToRound(state.currentRound - 1)}
           >
             ← Forrige
           </Button>
         )}
-        <Button onClick={nextRound}>
+        <Button
+          size="lg"
+          className="rounded-xl font-semibold transition-transform active:scale-95 shadow-lg"
+          onClick={nextRound}
+        >
           {isLastRound ? "Avslutt spill" : "Neste runde →"}
         </Button>
       </div>

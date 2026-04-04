@@ -51,16 +51,16 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-6 p-5">
       <div className="text-center">
-        <h2 className="text-xl font-bold">{ROUND_LABELS.dame}</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 className="text-2xl font-extrabold tracking-tight">{ROUND_LABELS.dame}</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           {ROUND_DESCRIPTIONS.dame}
         </p>
       </div>
 
       {/* Queen cards */}
-      <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+      <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
         {QUEENS.map(({ suit, symbol, label, color }) => {
           const assigned = getAssignedPlayer(suit);
           const isAssigned = !!assigned;
@@ -72,19 +72,19 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
               onOpenChange={(open) => setOpenSuit(open ? suit : null)}
             >
               <PopoverTrigger
-                  className={`flex flex-col items-center gap-1 rounded-xl border-2 p-4 transition-all ${
+                  className={`flex flex-col items-center gap-2 rounded-2xl border-2 p-5 transition-all cursor-pointer shadow-lg shadow-black/20 hover:scale-[1.03] active:scale-95 ${
                     isAssigned
                       ? `${color} bg-card`
-                      : "border-border bg-card/50 opacity-60"
+                      : "border-border bg-card/50 opacity-70 hover:opacity-90"
                   }`}
                 >
-                  <span className="text-3xl">{symbol}</span>
-                  <span className="text-xs text-muted-foreground">{label}</span>
-                  <span className="text-xs mt-1">
-                    {assigned ? `${assigned.icon} ${assigned.name}` : "—"}
+                  <span className="text-4xl">{symbol}</span>
+                  <span className="text-sm text-muted-foreground font-medium">{label}</span>
+                  <span className="text-sm mt-1 font-medium">
+                    {assigned ? `${assigned.icon} ${assigned.name}` : "Trykk for å velge"}
                   </span>
               </PopoverTrigger>
-              <PopoverContent className="w-48 p-2">
+              <PopoverContent className="w-52 p-2">
                 <div className="flex flex-col gap-1">
                   <p className="text-xs text-muted-foreground mb-1 px-2">
                     Hvem tok {label.toLowerCase()}?
@@ -93,8 +93,8 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
                     <button
                       key={p.id}
                       onClick={() => assignQueen(suit, p.id)}
-                      className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent transition-colors ${
-                        assignments[suit] === p.id ? "bg-accent" : ""
+                      className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-accent transition-all active:scale-95 ${
+                        assignments[suit] === p.id ? "bg-accent font-medium" : ""
                       }`}
                     >
                       <span>{p.icon}</span>
@@ -104,7 +104,7 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
                   {isAssigned && (
                     <button
                       onClick={() => assignQueen(suit, null)}
-                      className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-destructive hover:bg-destructive/10 transition-colors mt-1"
+                      className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/10 transition-all active:scale-95 mt-1"
                     >
                       ✕ Fjern
                     </button>
@@ -117,13 +117,13 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
       </div>
 
       {/* Points summary */}
-      <div className="flex justify-center gap-4 text-sm">
+      <div className="flex flex-wrap justify-center gap-5 text-sm">
         {players.map((p) => (
           <div key={p.id} className="text-center">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-sm text-muted-foreground">
               {p.icon} {p.name}
             </span>
-            <div className="font-bold">{pointsByPlayer[p.id]}p</div>
+            <div className="font-extrabold text-lg">{pointsByPlayer[p.id]}p</div>
           </div>
         ))}
       </div>

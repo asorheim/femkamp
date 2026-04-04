@@ -32,14 +32,14 @@ export function GameSummary({
     .join(" & ");
 
   return (
-    <div className="flex flex-col items-center gap-6 p-4 max-w-lg mx-auto">
+    <div className="flex flex-col items-center gap-8 p-6 max-w-lg mx-auto min-h-screen justify-center">
       {/* Winner announcement */}
       <div className="text-center">
-        <div className="text-5xl mb-2">🏆</div>
-        <h2 className="text-2xl font-bold text-green-400">
+        <div className="text-6xl mb-3">🏆</div>
+        <h2 className="text-3xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
           {winnerNames} vinner!
         </h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mt-1">
           {totalScores[winners[0]]} poeng totalt
         </p>
       </div>

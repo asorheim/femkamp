@@ -11,11 +11,10 @@ interface CounterRoundProps {
 
 function getExpectedTotal(roundType: RoundType, playerCount: number): number | null {
   if (roundType === "pass" || roundType === "grand") {
-    // 52 cards, dealt evenly. Tricks = cards / playerCount rounded
     return Math.floor(52 / playerCount);
   }
   if (roundType === "klover") {
-    return 13; // always 13 clubs
+    return 13;
   }
   return null;
 }
@@ -29,7 +28,7 @@ export function CounterRound({
   const counts = roundScore.counts;
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   const expected = getExpectedTotal(roundType, players.length);
-  const showWarning = expected !== null && total !== expected && total > 0;
+  const isFull = expected !== null && total >= expected;
 
   const updateCount = (playerId: string, delta: number) => {
     const current = counts[playerId] ?? 0;
@@ -41,37 +40,38 @@ export function CounterRound({
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-6 p-5">
       <div className="text-center">
-        <h2 className="text-xl font-bold">{ROUND_LABELS[roundType]}</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 className="text-2xl font-extrabold tracking-tight">{ROUND_LABELS[roundType]}</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           {ROUND_DESCRIPTIONS[roundType]}
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
+      <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center">
         {players.map((p) => (
           <div
             key={p.id}
-            className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 min-w-[100px]"
+            className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5 min-w-[110px] shadow-lg shadow-black/20"
           >
-            <span className="text-xs text-muted-foreground">
+            <span className="text-sm font-medium text-muted-foreground">
               {p.icon} {p.name}
             </span>
-            <span className="text-3xl font-bold">{counts[p.id] ?? 0}</span>
-            <div className="flex gap-2">
+            <span className="text-5xl font-extrabold tabular-nums">{counts[p.id] ?? 0}</span>
+            <div className="flex gap-3">
               <Button
                 variant="default"
                 size="icon"
-                className="h-10 w-10 text-lg"
+                className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
                 onClick={() => updateCount(p.id, 1)}
+                disabled={isFull}
               >
                 +
               </Button>
               <Button
                 variant="secondary"
                 size="icon"
-                className="h-10 w-10 text-lg"
+                className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
                 onClick={() => updateCount(p.id, -1)}
                 disabled={(counts[p.id] ?? 0) === 0}
               >
@@ -82,16 +82,11 @@ export function CounterRound({
         ))}
       </div>
 
-      {/* Total and validation */}
-      <div className="text-center text-sm text-muted-foreground">
+      {/* Total display */}
+      <div className="text-center text-sm font-medium text-muted-foreground">
         Totalt: {total}
         {expected !== null && ` / ${expected}`}
       </div>
-      {showWarning && (
-        <p className="text-center text-xs text-amber-400">
-          ⚠ Forventet {expected}, men {total} er registrert
-        </p>
-      )}
     </div>
   );
 }
