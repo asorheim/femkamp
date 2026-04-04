@@ -35,7 +35,7 @@ export const ROUND_LABELS: Record<RoundType, string> = {
   pass: "Passrunda",
   klover: "Kløverrunda",
   dame: "Damerunda",
-  grand: "Grandrunda",
+  grand: "Grangrunda",
   kabal: "Kabalrunda",
 };
 

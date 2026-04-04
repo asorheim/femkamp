@@ -8,6 +8,44 @@ interface SolitaireRoundProps {
   onUpdate: (score: RoundScore) => void;
 }
 
+function Counter({
+  label,
+  value,
+  onIncrement,
+  onDecrement,
+}: {
+  label: string;
+  value: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <Button
+        variant="secondary"
+        size="icon"
+        className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+        onClick={onDecrement}
+        disabled={value === 0}
+      >
+        −
+      </Button>
+      <div className="flex flex-col items-center min-w-[60px]">
+        <span className="text-xs text-muted-foreground font-medium">{label}</span>
+        <span className="text-3xl font-extrabold tabular-nums">{value}</span>
+      </div>
+      <Button
+        variant="default"
+        size="icon"
+        className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+        onClick={onIncrement}
+      >
+        +
+      </Button>
+    </div>
+  );
+}
+
 export function SolitaireRound({
   players,
   roundScore,
@@ -37,7 +75,7 @@ export function SolitaireRound({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center">
+      <div className="flex flex-col gap-3 max-w-lg mx-auto w-full">
         {players.map((p) => {
           const passCount = passes[p.id] ?? 0;
           const remainCount = remaining[p.id] ?? 0;
@@ -46,71 +84,31 @@ export function SolitaireRound({
           return (
             <div
               key={p.id}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5 min-w-[140px] shadow-lg shadow-black/20"
+              className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3 shadow-lg shadow-black/5"
             >
-              <span className="text-sm font-medium text-muted-foreground">
-                {p.icon} {p.name}
-              </span>
-
-              <div className="flex gap-5">
-                {/* Passes counter */}
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-xs text-muted-foreground font-medium">
-                    Prikker
-                  </span>
-                  <span className="text-4xl font-extrabold tabular-nums">{passCount}</span>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="default"
-                      size="icon"
-                      className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
-                      onClick={() => updateValue("passes", p.id, 1)}
-                    >
-                      +
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
-                      onClick={() => updateValue("passes", p.id, -1)}
-                      disabled={passCount === 0}
-                    >
-                      −
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Remaining cards counter */}
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-xs text-muted-foreground font-medium">
-                    Restkort
-                  </span>
-                  <span className="text-4xl font-extrabold tabular-nums">{remainCount}</span>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="default"
-                      size="icon"
-                      className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
-                      onClick={() => updateValue("remaining", p.id, 1)}
-                    >
-                      +
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="h-12 w-12 text-xl font-bold rounded-xl transition-transform active:scale-90 hover:brightness-110"
-                      onClick={() => updateValue("remaining", p.id, -1)}
-                      disabled={remainCount === 0}
-                    >
-                      −
-                    </Button>
-                  </div>
-                </div>
+              <div className="flex flex-col items-center min-w-[50px]">
+                <span className="text-lg">{p.icon}</span>
+                <span className="text-xs font-medium truncate max-w-[60px]">{p.name}</span>
               </div>
 
-              <span className="text-sm font-bold text-muted-foreground">
-                = {subtotal} poeng
-              </span>
+              <Counter
+                label="Prikker"
+                value={passCount}
+                onIncrement={() => updateValue("passes", p.id, 1)}
+                onDecrement={() => updateValue("passes", p.id, -1)}
+              />
+
+              <Counter
+                label="Restkort"
+                value={remainCount}
+                onIncrement={() => updateValue("remaining", p.id, 1)}
+                onDecrement={() => updateValue("remaining", p.id, -1)}
+              />
+
+              <div className="flex flex-col items-center min-w-[40px]">
+                <span className="text-xs text-muted-foreground">Sum</span>
+                <span className="text-xl font-extrabold">{subtotal}</span>
+              </div>
             </div>
           );
         })}
