@@ -8,44 +8,6 @@ interface SolitaireRoundProps {
   onUpdate: (score: RoundScore) => void;
 }
 
-function Counter({
-  label,
-  value,
-  onIncrement,
-  onDecrement,
-}: {
-  label: string;
-  value: number;
-  onIncrement: () => void;
-  onDecrement: () => void;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <Button
-        variant="secondary"
-        size="icon"
-        className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
-        onClick={onDecrement}
-        disabled={value === 0}
-      >
-        −
-      </Button>
-      <div className="flex flex-col items-center min-w-[60px]">
-        <span className="text-xs text-muted-foreground font-medium">{label}</span>
-        <span className="text-3xl font-extrabold tabular-nums">{value}</span>
-      </div>
-      <Button
-        variant="default"
-        size="icon"
-        className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
-        onClick={onIncrement}
-      >
-        +
-      </Button>
-    </div>
-  );
-}
-
 export function SolitaireRound({
   players,
   roundScore,
@@ -75,7 +37,7 @@ export function SolitaireRound({
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 max-w-lg mx-auto w-full">
+      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
         {players.map((p) => {
           const passCount = passes[p.id] ?? 0;
           const remainCount = remaining[p.id] ?? 0;
@@ -84,30 +46,64 @@ export function SolitaireRound({
           return (
             <div
               key={p.id}
-              className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3 shadow-lg shadow-black/5"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-lg shadow-black/5 min-w-[140px]"
             >
-              <div className="flex flex-col items-center min-w-[50px]">
-                <span className="text-lg">{p.icon}</span>
-                <span className="text-xs font-medium truncate max-w-[60px]">{p.name}</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                {p.icon} {p.name}
+              </span>
+
+              {/* Prikker row */}
+              <div className="flex items-center gap-2 w-full justify-center">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+                  onClick={() => updateValue("passes", p.id, -1)}
+                  disabled={passCount === 0}
+                >
+                  −
+                </Button>
+                <div className="flex flex-col items-center min-w-[50px]">
+                  <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Prikker</span>
+                  <span className="text-2xl font-extrabold tabular-nums">{passCount}</span>
+                </div>
+                <Button
+                  variant="default"
+                  size="icon"
+                  className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+                  onClick={() => updateValue("passes", p.id, 1)}
+                >
+                  +
+                </Button>
               </div>
 
-              <Counter
-                label="Prikker"
-                value={passCount}
-                onIncrement={() => updateValue("passes", p.id, 1)}
-                onDecrement={() => updateValue("passes", p.id, -1)}
-              />
+              {/* Restkort row */}
+              <div className="flex items-center gap-2 w-full justify-center">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+                  onClick={() => updateValue("remaining", p.id, -1)}
+                  disabled={remainCount === 0}
+                >
+                  −
+                </Button>
+                <div className="flex flex-col items-center min-w-[50px]">
+                  <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Restkort</span>
+                  <span className="text-2xl font-extrabold tabular-nums">{remainCount}</span>
+                </div>
+                <Button
+                  variant="default"
+                  size="icon"
+                  className="h-10 w-10 text-lg font-bold rounded-xl transition-transform active:scale-90"
+                  onClick={() => updateValue("remaining", p.id, 1)}
+                >
+                  +
+                </Button>
+              </div>
 
-              <Counter
-                label="Restkort"
-                value={remainCount}
-                onIncrement={() => updateValue("remaining", p.id, 1)}
-                onDecrement={() => updateValue("remaining", p.id, -1)}
-              />
-
-              <div className="flex flex-col items-center min-w-[40px]">
-                <span className="text-xs text-muted-foreground">Sum</span>
-                <span className="text-xl font-extrabold">{subtotal}</span>
+              <div className="border-t border-border pt-2 w-full text-center">
+                <span className="text-sm font-extrabold">= {subtotal} poeng</span>
               </div>
             </div>
           );
