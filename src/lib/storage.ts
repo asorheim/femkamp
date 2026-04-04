@@ -42,7 +42,17 @@ const MAX_RECENT_PLAYERS = 10;
 export function loadRecentPlayers(): Player[] {
   const raw = localStorage.getItem(KEYS.recentPlayers);
   if (!raw) return [];
-  try { return JSON.parse(raw) as Player[]; } catch { return []; }
+  try {
+    const players = JSON.parse(raw) as Player[];
+    // Deduplicate by name (case-insensitive) — cleans up legacy data
+    const seen = new Set<string>();
+    return players.filter((p) => {
+      const key = p.name.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  } catch { return []; }
 }
 
 export function saveRecentPlayers(players: Player[]): void {
