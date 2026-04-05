@@ -54,14 +54,14 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const availableRecent = recentPlayers.filter((r) => !isDuplicate(r.name));
 
-  // Five-pip ribbon under the title: one pip per round, 2-letter label
-  // (avoids the Kløver/Kabal K-collision).
+  // Five-pip ribbon under the title: numbered 1–5 in Fraunces serif.
+  // Reinforces the "five rounds" concept; round name on hover.
   const rounds = [
-    { label: "Pa", name: "Pass" },
-    { label: "Kl", name: "Kløver" },
-    { label: "Ka", name: "Kabal" },
-    { label: "Da", name: "Dame" },
-    { label: "Gr", name: "Grang" },
+    { label: "1", name: "Pass" },
+    { label: "2", name: "Kløver" },
+    { label: "3", name: "Kabal" },
+    { label: "4", name: "Dame" },
+    { label: "5", name: "Grang" },
   ];
 
   return (
@@ -81,13 +81,13 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             Femkamp
           </h1>
 
-          {/* Five-pip ribbon — one pip per round.
-              Ink text on aurora bg gives ~6:1 contrast (passes WCAG AA). */}
+          {/* Five-pip ribbon — numbered 1–5.
+              Ink numerals on aurora bg gives ~6:1 contrast (passes WCAG AA). */}
           <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
             {rounds.map((r, i) => (
               <div
                 key={i}
-                className="flex items-center justify-center rounded-full font-display font-bold text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm bg-fk-aurora text-fk-ink border border-fk-ink/10"
+                className="flex items-center justify-center rounded-full font-display font-bold text-base sm:text-lg w-9 h-9 sm:w-11 sm:h-11 shadow-sm bg-fk-aurora text-fk-ink border border-fk-ink/10"
                 title={r.name}
               >
                 {r.label}
