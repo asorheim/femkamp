@@ -126,6 +126,41 @@
   box-shadow: 0 2px 12px rgba(30, 37, 48, 0.08), 0 1px 3px rgba(30, 37, 48, 0.04);
 }
 
+/* Tactile "chunky" button — a solid bottom edge gives the button visible
+   physical depth, a soft drop shadow lifts it off the surface, and a subtle
+   inset highlight on top hints at light hitting the edge. On press the
+   button sinks down (translateY + shorter bottom edge) for a mechanical
+   key-press feel. Works over any button color (ink, berry, aurora, card). */
+.fk-btn-lift {
+  box-shadow:
+    0 3px 0 0 rgba(15, 20, 25, 0.18),
+    0 6px 16px -3px rgba(30, 37, 48, 0.16),
+    0 1px 3px rgba(30, 37, 48, 0.08),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.12s cubic-bezier(0.3, 0.8, 0.4, 1.1),
+    box-shadow 0.12s ease-out;
+}
+.fk-btn-lift:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 0 0 rgba(15, 20, 25, 0.2),
+    0 10px 24px -4px rgba(30, 37, 48, 0.22),
+    0 2px 4px rgba(30, 37, 48, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+}
+.fk-btn-lift:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 0 rgba(15, 20, 25, 0.18),
+    0 2px 6px -1px rgba(30, 37, 48, 0.12),
+    inset 0 1px 2px rgba(15, 20, 25, 0.15);
+}
+.fk-btn-lift:disabled {
+  box-shadow: 0 1px 2px rgba(30, 37, 48, 0.05);
+  transform: none;
+}
+
 /* Fireworks celebration on the winner screen.
    A .firework is a burst origin that rises, then its particles fan outward
    using inline CSS vars --tx/--ty. Both animations share the same 2.4s cycle

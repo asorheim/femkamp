@@ -120,7 +120,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
           <button
             onClick={addPlayer}
             disabled={!nameInput.trim() || isDuplicate(nameInput.trim())}
-            className="rounded-xl px-5 sm:px-7 font-display font-bold text-base sm:text-lg transition-transform active:scale-95 whitespace-nowrap bg-fk-berry text-fk-paper fk-card-shadow disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
+            className="rounded-xl px-5 sm:px-7 font-display font-bold text-base sm:text-lg whitespace-nowrap bg-fk-berry text-fk-paper fk-btn-lift disabled:bg-muted disabled:text-muted-foreground"
           >
             Legg til
           </button>
@@ -144,7 +144,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
                 <button
                   key={r.id}
                   onClick={() => addRecentPlayer(r)}
-                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base hover:scale-[1.03] active:scale-95 transition-all bg-card border border-border text-foreground fk-card-shadow"
+                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base bg-card border border-border text-foreground fk-btn-lift"
                 >
                   <span>{r.icon}</span>
                   <span className="font-medium">{r.name}</span>
@@ -194,7 +194,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         <button
           onClick={() => onStart(players)}
           disabled={!canStart}
-          className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl transition-transform active:scale-[0.98] bg-fk-ink text-fk-paper fk-card-shadow disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
+          className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl bg-fk-ink text-fk-paper fk-btn-lift disabled:bg-muted disabled:text-muted-foreground"
         >
           {startLabel}
         </button>
