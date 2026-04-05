@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { Player } from "../types";
 import { assignIcon, nextIcon } from "../lib/icons";
 import { loadRecentPlayers } from "../lib/storage";
-import { Button } from "@/components/ui/button";
 
 interface PlayerSetupProps {
   onStart: (players: Player[]) => void;
@@ -55,99 +54,133 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const availableRecent = recentPlayers.filter((r) => !isDuplicate(r.name));
 
+  // Five-pip ribbon under the title: one pip per round, abbreviated label.
+  const rounds = [
+    { label: "P", name: "Pass" },
+    { label: "K", name: "Kløver" },
+    { label: "K", name: "Kabal" },
+    { label: "D", name: "Dame" },
+    { label: "G", name: "Grang" },
+  ];
+
   return (
-    <div className="flex flex-col items-center gap-8 p-6 max-w-md mx-auto min-h-screen justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight flex items-center justify-center gap-2">
-          <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Giant spade watermark bleeding off the top-right corner */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 -right-24 sm:-top-32 sm:-right-32 text-[20rem] sm:text-[28rem] md:text-[36rem] leading-none select-none text-fk-ink opacity-[0.06]"
+      >
+        ♠
+      </div>
+
+      <div className="relative flex flex-col items-center gap-5 sm:gap-8 p-6 sm:p-10 max-w-md sm:max-w-2xl mx-auto">
+        {/* Title */}
+        <div className="text-center pt-4 sm:pt-8">
+          <h1 className="font-display font-black tracking-tight text-5xl sm:text-7xl md:text-8xl leading-none text-fk-ink">
             Femkamp
-          </span>
-          <span>🃏</span>
-        </h1>
-        <p className="text-muted-foreground text-sm mt-2">Legg til 3+ spillere</p>
-      </div>
+          </h1>
 
-      {/* Name input */}
-      <div className="flex gap-3 w-full">
-        <input
-          type="text"
-          value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Spillernavn..."
-          className="flex-1 rounded-xl border border-input bg-background px-4 py-3 text-base shadow-sm focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all outline-none"
-          maxLength={20}
-        />
-        <Button
-          onClick={addPlayer}
-          disabled={!nameInput.trim() || isDuplicate(nameInput.trim())}
-          className="rounded-xl px-5 transition-transform active:scale-95"
-          size="lg"
-        >
-          Legg til
-        </Button>
-      </div>
-
-      {/* Duplicate warning */}
-      {nameInput.trim() && isDuplicate(nameInput.trim()) && (
-        <p className="text-destructive text-xs -mt-6">Navnet er allerede lagt til</p>
-      )}
-
-      {/* Recent players */}
-      {availableRecent.length > 0 && (
-        <div className="w-full">
-          <p className="text-xs text-muted-foreground mb-2 font-medium">Nylige spillere:</p>
-          <div className="flex flex-wrap gap-2">
-            {availableRecent.map((r) => (
-              <button
-                key={r.id}
-                onClick={() => addRecentPlayer(r)}
-                className="flex items-center gap-1.5 rounded-full border border-input px-4 py-2 text-sm hover:bg-accent hover:scale-[1.03] active:scale-95 transition-all shadow-sm"
+          {/* Five-pip ribbon — one pip per round */}
+          <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
+            {rounds.map((r, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-center rounded-full font-display font-bold text-sm sm:text-base w-8 h-8 sm:w-10 sm:h-10 shadow-sm bg-fk-aurora text-fk-paper border border-black/15"
+                title={r.name}
               >
-                <span>{r.icon}</span>
-                <span>{r.name}</span>
-              </button>
+                {r.label}
+              </div>
             ))}
           </div>
         </div>
-      )}
 
-      {/* Player list */}
-      {players.length > 0 && (
-        <div className="w-full space-y-2">
-          {players.map((p) => (
-            <div
-              key={p.id}
-              className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-md shadow-black/10"
-            >
-              <button
-                onClick={() => cycleIcon(p.id)}
-                className="text-3xl hover:scale-110 active:scale-90 transition-transform"
-                title="Bytt ikon"
-              >
-                {p.icon}
-              </button>
-              <span className="flex-1 font-semibold text-base">{p.name}</span>
-              <button
-                onClick={() => removePlayer(p.id)}
-                className="text-muted-foreground hover:text-destructive text-base p-2 rounded-lg hover:bg-destructive/10 transition-all active:scale-90"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+        {/* Name input */}
+        <div className="flex gap-3 w-full">
+          <input
+            type="text"
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Spillernavn..."
+            className="flex-1 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg shadow-sm outline-none transition-all focus:ring-2 focus:ring-fk-berry bg-fk-paper border-[1.5px] border-fk-aurora text-fk-charcoal"
+            maxLength={20}
+          />
+          <button
+            onClick={addPlayer}
+            disabled={!nameInput.trim() || isDuplicate(nameInput.trim())}
+            className="rounded-xl px-5 sm:px-7 font-display font-bold text-base sm:text-lg transition-transform active:scale-95 disabled:opacity-40 shadow-md whitespace-nowrap bg-fk-berry text-fk-paper"
+          >
+            Legg til
+          </button>
         </div>
-      )}
 
-      {/* Start button */}
-      <Button
-        onClick={() => onStart(players)}
-        disabled={players.length < 3}
-        className="w-full rounded-xl text-base font-bold transition-transform active:scale-[0.98] shadow-lg"
-        size="lg"
-      >
-        Start spill ({players.length} spillere)
-      </Button>
+        {/* Duplicate warning */}
+        {nameInput.trim() && isDuplicate(nameInput.trim()) && (
+          <p className="text-sm -mt-6 text-fk-berry">
+            Navnet er allerede lagt til
+          </p>
+        )}
+
+        {/* Recent players */}
+        {availableRecent.length > 0 && (
+          <div className="w-full">
+            <p className="text-sm sm:text-base mb-2 sm:mb-3 font-display italic text-fk-fjord">
+              Nylige spillere:
+            </p>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              {availableRecent.map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => addRecentPlayer(r)}
+                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base hover:scale-[1.03] active:scale-95 transition-all shadow-sm bg-fk-paper border-[1.5px] border-fk-aurora text-fk-charcoal"
+                >
+                  <span>{r.icon}</span>
+                  <span className="font-medium">{r.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Player list */}
+        {players.length > 0 && (
+          <div className="w-full space-y-2">
+            {players.map((p) => (
+              <div
+                key={p.id}
+                className="flex items-center gap-3 rounded-xl px-4 py-2.5 sm:px-5 sm:py-3 shadow-md bg-fk-paper border-[1.5px] border-fk-aurora"
+                style={{ boxShadow: "0 2px 8px rgba(15, 20, 25, 0.08)" }}
+              >
+                <button
+                  onClick={() => cycleIcon(p.id)}
+                  className="text-2xl sm:text-3xl hover:scale-110 active:scale-90 transition-transform"
+                  title="Bytt ikon"
+                >
+                  {p.icon}
+                </button>
+                <span className="flex-1 font-display font-semibold text-base sm:text-xl text-fk-charcoal">
+                  {p.name}
+                </span>
+                <button
+                  onClick={() => removePlayer(p.id)}
+                  className="text-lg sm:text-xl p-1.5 rounded-lg transition-all active:scale-90 hover:bg-black/5 text-fk-fjord"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Start button */}
+        <button
+          onClick={() => onStart(players)}
+          disabled={players.length < 3}
+          className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl transition-transform active:scale-[0.98] shadow-lg disabled:opacity-40 bg-fk-ink text-fk-paper"
+        >
+          Start spill ({players.length} {players.length === 1 ? "spiller" : "spillere"})
+        </button>
+      </div>
     </div>
   );
 }

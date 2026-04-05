@@ -28,7 +28,7 @@ export function History({ onBack }: HistoryProps) {
   return (
     <div className="flex flex-col gap-5 p-6 max-w-md mx-auto">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-extrabold tracking-tight">Historikk</h2>
+        <h2 className="font-display text-2xl sm:text-4xl font-black tracking-tight text-fk-ink">Historikk</h2>
         <Button variant="ghost" size="sm" onClick={onBack}>
           ← Tilbake
         </Button>
@@ -55,7 +55,7 @@ export function History({ onBack }: HistoryProps) {
                     <p className="text-xs text-muted-foreground">
                       {formatDate(game.date)}
                     </p>
-                    <p className="font-medium text-green-400 mt-1">
+                    <p className="font-medium text-emerald-700 mt-1">
                       🏆{" "}
                       {winnerPlayers
                         .map((p) => `${p!.icon} ${p!.name}`)

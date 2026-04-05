@@ -25,14 +25,14 @@ export function Scoreboard({
   const maxScore = Math.max(...scores.map(([, s]) => s));
 
   const getColor = (score: number) => {
-    if (scores.length <= 1) return "text-foreground";
-    if (score === minScore) return "text-green-400";
-    if (score === maxScore) return "text-red-400";
+    if (scores.length <= 1 || minScore === maxScore) return "text-foreground";
+    if (score === minScore) return "text-emerald-700";
+    if (score === maxScore) return "text-fk-berry";
     return "text-foreground";
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border shadow-md shadow-black/10">
+    <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-border shadow-sm">
       {/* Totals row */}
       <button
         onClick={() => setExpanded(!expanded)}
@@ -99,9 +99,9 @@ export function Scoreboard({
             onClick={() => onGoToRound(i)}
             className={`text-xs px-3 py-1.5 sm:text-base sm:px-5 sm:py-2.5 md:text-lg md:px-6 md:py-3 rounded-full font-semibold transition-all active:scale-90 ${
               i === currentRound
-                ? "bg-amber-500 text-black shadow-md shadow-amber-500/30"
+                ? "bg-fk-berry text-fk-paper shadow-md"
                 : i < currentRound
-                  ? "bg-primary text-primary-foreground hover:brightness-110"
+                  ? "bg-fk-ink text-fk-paper hover:brightness-110"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
           >

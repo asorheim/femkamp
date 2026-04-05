@@ -33,7 +33,7 @@ export function CounterRound({
   return (
     <div className="flex flex-col gap-6 p-5 sm:gap-10 sm:p-8 max-w-6xl mx-auto w-full">
       <div className="text-center">
-        <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">{ROUND_LABELS[roundType]}</h2>
+        <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-fk-ink">{ROUND_LABELS[roundType]}</h2>
         <p className="text-sm sm:text-xl md:text-2xl text-muted-foreground mt-1 sm:mt-2">
           {ROUND_DESCRIPTIONS[roundType]}
         </p>

@@ -10,14 +10,14 @@ interface GameSummaryProps {
   onShowHistory: () => void;
 }
 
-// Multi-burst fireworks backdrop. Bursts are positioned in viewport %, each
-// with its own color and delay. Particles per burst fan out at even angles.
+// Multi-burst fireworks backdrop in Midnatt palette. Bursts are positioned in
+// viewport %, each with its own color and delay. Particles fan out evenly.
 const FIREWORKS = [
-  { left: "20%", color: "#fbbf24", delay: "0s" },
-  { left: "50%", color: "#f472b6", delay: "0.6s" },
-  { left: "78%", color: "#34d399", delay: "1.2s" },
-  { left: "35%", color: "#60a5fa", delay: "1.8s" },
-  { left: "65%", color: "#a78bfa", delay: "2.4s" },
+  { left: "20%", color: "#6FB7A6", delay: "0s" },     // aurora
+  { left: "50%", color: "#B13B5A", delay: "0.6s" },   // berry
+  { left: "78%", color: "#3A6B8A", delay: "1.2s" },   // fjord
+  { left: "35%", color: "#D4637E", delay: "1.8s" },   // berry-soft
+  { left: "65%", color: "#A8D4C8", delay: "2.4s" },   // aurora-soft
 ];
 const PARTICLES_PER_BURST = 14;
 const BURST_RADIUS = 90;
@@ -81,17 +81,17 @@ export function GameSummary({
       {/* Winner announcement */}
       <div className="relative text-center z-10">
         <div className="text-6xl sm:text-8xl md:text-9xl mb-3 sm:mb-5 animate-bounce">🏆</div>
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-3xl sm:text-6xl md:text-7xl font-extrabold">
+        <div className="font-display flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-3xl sm:text-6xl md:text-7xl font-black tracking-tight">
           {winnerPlayers.map((p, i) => (
             <span key={p.id} className="flex items-center gap-2">
               <span>{p.icon}</span>
-              <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-fk-aurora to-fk-fjord bg-clip-text text-transparent">
                 {p.name}
               </span>
-              {i < winnerPlayers.length - 1 && <span className="text-foreground">&</span>}
+              {i < winnerPlayers.length - 1 && <span className="text-fk-ink">&</span>}
             </span>
           ))}
-          <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-fk-aurora to-fk-fjord bg-clip-text text-transparent">
             vinner!
           </span>
         </div>
@@ -119,9 +119,9 @@ export function GameSummary({
               const isWinner = winners.includes(p.id);
               const isLoser = totalScores[p.id] === maxScore && !isWinner;
               const rowColor = isWinner
-                ? "text-green-400 font-bold"
+                ? "text-emerald-700 font-bold"
                 : isLoser
-                  ? "text-red-400"
+                  ? "text-fk-berry"
                   : "text-foreground";
 
               return (
