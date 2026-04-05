@@ -51,16 +51,16 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6 p-5 sm:gap-10 sm:p-8 max-w-6xl mx-auto w-full">
+    <div className="flex flex-col gap-3 p-3 sm:gap-4 sm:p-4 lg:gap-5 lg:p-5 max-w-6xl mx-auto w-full">
       <div className="text-center">
-        <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-fk-ink">{ROUND_LABELS.dame}</h2>
-        <p className="text-sm sm:text-xl md:text-2xl text-muted-foreground mt-1 sm:mt-2">
+        <h2 className="font-display text-xl sm:text-2xl lg:text-4xl font-black tracking-tight text-fk-ink">{ROUND_LABELS.dame}</h2>
+        <p className="text-xs sm:text-sm lg:text-xl text-muted-foreground mt-0.5 sm:mt-1">
           {ROUND_DESCRIPTIONS.dame}
         </p>
       </div>
 
       {/* Queen cards */}
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-sm sm:max-w-2xl md:max-w-3xl mx-auto w-full">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 max-w-sm sm:max-w-xl lg:max-w-3xl mx-auto w-full">
         {QUEENS.map(({ suit, symbol, label, color }) => {
           const assigned = getAssignedPlayer(suit);
           const isAssigned = !!assigned;
@@ -72,15 +72,15 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
               onOpenChange={(open) => setOpenSuit(open ? suit : null)}
             >
               <PopoverTrigger
-                  className={`flex flex-col items-center gap-2 sm:gap-4 rounded-2xl border-2 p-5 sm:p-8 transition-all cursor-pointer fk-card-shadow hover:scale-[1.03] active:scale-95 ${
+                  className={`flex flex-col items-center gap-1 sm:gap-2 lg:gap-3 rounded-2xl border-2 p-3 sm:p-4 lg:p-6 transition-all cursor-pointer fk-card-shadow hover:scale-[1.03] active:scale-95 ${
                     isAssigned
                       ? `${color} bg-card`
                       : "border-border bg-card/50 opacity-70 hover:opacity-90"
                   }`}
                 >
-                  <span className="text-4xl sm:text-7xl md:text-8xl leading-none">{symbol}</span>
-                  <span className="text-sm sm:text-xl md:text-2xl text-muted-foreground font-medium">{label}</span>
-                  <span className="text-sm sm:text-xl md:text-2xl mt-1 font-semibold">
+                  <span className="text-3xl sm:text-5xl lg:text-7xl leading-none">{symbol}</span>
+                  <span className="text-xs sm:text-sm lg:text-xl text-muted-foreground font-medium">{label}</span>
+                  <span className="text-xs sm:text-sm lg:text-xl font-semibold">
                     {assigned ? `${assigned.icon} ${assigned.name}` : "Trykk for å velge"}
                   </span>
               </PopoverTrigger>
@@ -117,13 +117,13 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
       </div>
 
       {/* Points summary */}
-      <div className="flex flex-wrap justify-center gap-5 sm:gap-10 text-sm">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-10 text-sm">
         {players.map((p) => (
           <div key={p.id} className="text-center">
-            <span className="text-sm sm:text-xl md:text-2xl text-muted-foreground">
+            <span className="text-xs sm:text-sm lg:text-xl text-muted-foreground">
               {p.icon} {p.name}
             </span>
-            <div className="font-extrabold text-lg sm:text-4xl md:text-5xl tabular-nums">{pointsByPlayer[p.id]}p</div>
+            <div className="font-extrabold text-lg sm:text-2xl lg:text-4xl tabular-nums">{pointsByPlayer[p.id]}p</div>
           </div>
         ))}
       </div>

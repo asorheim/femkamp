@@ -141,18 +141,18 @@ function App() {
         />
       )}
 
-      <div className="flex flex-col items-center gap-3 p-5 pb-10 sm:pb-14">
+      <div className="flex flex-col items-center gap-2 p-3 pb-5 sm:gap-3 sm:p-4 sm:pb-6 lg:pb-10">
         {!canAdvance && incompleteHint && (
-          <p className="text-sm sm:text-lg md:text-xl text-amber-600 font-medium">
+          <p className="text-xs sm:text-sm lg:text-base text-amber-600 font-medium">
             {incompleteHint}
           </p>
         )}
-        <div className="flex justify-center gap-4 sm:gap-6">
+        <div className="flex justify-center gap-3 sm:gap-4 lg:gap-6">
           {state.currentRound > 0 && (
             <Button
               variant="secondary"
               size="lg"
-              className="rounded-xl font-semibold transition-transform active:scale-95 sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl"
+              className="rounded-xl font-semibold transition-transform active:scale-95 h-11 px-5 text-base sm:h-12 sm:px-6 sm:text-lg lg:h-14 lg:px-8 lg:text-xl"
               onClick={() => goToRound(state.currentRound - 1)}
             >
               ← Forrige
@@ -160,7 +160,7 @@ function App() {
           )}
           <Button
             size="lg"
-            className="rounded-xl font-semibold transition-transform active:scale-95 shadow-lg sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl"
+            className="rounded-xl font-semibold transition-transform active:scale-95 shadow-lg h-11 px-5 text-base sm:h-12 sm:px-6 sm:text-lg lg:h-14 lg:px-8 lg:text-xl"
             onClick={nextRound}
             disabled={!canAdvance}
           >

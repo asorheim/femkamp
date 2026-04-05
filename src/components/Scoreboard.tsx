@@ -36,14 +36,14 @@ export function Scoreboard({
       {/* Totals row */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex flex-wrap justify-around w-full px-3 py-4 gap-2 sm:px-6 sm:py-6 sm:gap-4 md:py-8"
+        className="flex flex-wrap justify-around w-full px-3 py-2 gap-2 sm:px-5 sm:py-3 sm:gap-3 lg:py-4"
       >
         {players.map((p) => (
-          <div key={p.id} className="text-center min-w-[60px] sm:min-w-[110px]">
-            <div className="text-sm sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground font-semibold leading-tight">
+          <div key={p.id} className="text-center min-w-[60px] sm:min-w-[90px] lg:min-w-[110px]">
+            <div className="text-xs sm:text-sm lg:text-xl text-muted-foreground font-semibold leading-tight">
               {p.icon} {p.name}
             </div>
-            <div className={`text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tabular-nums leading-none ${getColor(totalScores[p.id] ?? 0)}`}>
+            <div className={`text-2xl sm:text-3xl lg:text-5xl font-extrabold tabular-nums leading-none ${getColor(totalScores[p.id] ?? 0)}`}>
               {totalScores[p.id] ?? 0}
             </div>
           </div>
@@ -92,12 +92,12 @@ export function Scoreboard({
       )}
 
       {/* Round progress pills */}
-      <div className="flex justify-center gap-2 pb-3 px-3 sm:gap-3 sm:pb-5 sm:px-6 flex-wrap">
+      <div className="flex justify-center gap-2 pb-2 px-3 sm:gap-2.5 sm:pb-3 sm:px-5 lg:pb-4 flex-wrap">
         {ROUND_ORDER.map((type, i) => (
           <button
             key={type}
             onClick={() => onGoToRound(i)}
-            className={`text-xs px-3 py-1.5 sm:text-base sm:px-5 sm:py-2.5 md:text-lg md:px-6 md:py-3 rounded-full font-semibold transition-all active:scale-90 ${
+            className={`text-xs px-2.5 py-1 sm:text-sm sm:px-3.5 sm:py-1.5 lg:text-base lg:px-5 lg:py-2 rounded-full font-semibold transition-all active:scale-90 ${
               i === currentRound
                 ? "bg-fk-berry text-fk-paper shadow-md"
                 : i < currentRound
