@@ -54,13 +54,14 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const availableRecent = recentPlayers.filter((r) => !isDuplicate(r.name));
 
-  // Five-pip ribbon under the title: one pip per round, abbreviated label.
+  // Five-pip ribbon under the title: one pip per round, 2-letter label
+  // (avoids the Kløver/Kabal K-collision).
   const rounds = [
-    { label: "P", name: "Pass" },
-    { label: "K", name: "Kløver" },
-    { label: "K", name: "Kabal" },
-    { label: "D", name: "Dame" },
-    { label: "G", name: "Grang" },
+    { label: "Pa", name: "Pass" },
+    { label: "Kl", name: "Kløver" },
+    { label: "Ka", name: "Kabal" },
+    { label: "Da", name: "Dame" },
+    { label: "Gr", name: "Grang" },
   ];
 
   return (
@@ -80,12 +81,13 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             Femkamp
           </h1>
 
-          {/* Five-pip ribbon — one pip per round */}
+          {/* Five-pip ribbon — one pip per round.
+              Ink text on aurora bg gives ~6:1 contrast (passes WCAG AA). */}
           <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
             {rounds.map((r, i) => (
               <div
                 key={i}
-                className="flex items-center justify-center rounded-full font-display font-bold text-sm sm:text-base w-8 h-8 sm:w-10 sm:h-10 shadow-sm bg-fk-aurora text-fk-paper border border-black/15"
+                className="flex items-center justify-center rounded-full font-display font-bold text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm bg-fk-aurora text-fk-ink border border-fk-ink/10"
                 title={r.name}
               >
                 {r.label}
@@ -102,13 +104,13 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             onChange={(e) => setNameInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Spillernavn..."
-            className="flex-1 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg shadow-sm outline-none transition-all focus:ring-2 focus:ring-fk-berry bg-fk-paper border-[1.5px] border-fk-aurora text-fk-charcoal"
+            className="flex-1 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg outline-none transition-all focus:ring-2 focus:ring-fk-aurora bg-card border border-border text-foreground fk-card-shadow"
             maxLength={20}
           />
           <button
             onClick={addPlayer}
             disabled={!nameInput.trim() || isDuplicate(nameInput.trim())}
-            className="rounded-xl px-5 sm:px-7 font-display font-bold text-base sm:text-lg transition-transform active:scale-95 disabled:opacity-40 shadow-md whitespace-nowrap bg-fk-berry text-fk-paper"
+            className="rounded-xl px-5 sm:px-7 font-display font-bold text-base sm:text-lg transition-transform active:scale-95 whitespace-nowrap bg-fk-berry text-fk-paper fk-card-shadow disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
           >
             Legg til
           </button>
@@ -124,7 +126,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         {/* Recent players */}
         {availableRecent.length > 0 && (
           <div className="w-full">
-            <p className="text-sm sm:text-base mb-2 sm:mb-3 font-display italic text-fk-fjord">
+            <p className="text-sm sm:text-base mb-2 sm:mb-3 font-display italic text-muted-foreground">
               Nylige spillere:
             </p>
             <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -132,7 +134,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
                 <button
                   key={r.id}
                   onClick={() => addRecentPlayer(r)}
-                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base hover:scale-[1.03] active:scale-95 transition-all shadow-sm bg-fk-paper border-[1.5px] border-fk-aurora text-fk-charcoal"
+                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base hover:scale-[1.03] active:scale-95 transition-all bg-card border border-border text-foreground fk-card-shadow"
                 >
                   <span>{r.icon}</span>
                   <span className="font-medium">{r.name}</span>
@@ -148,8 +150,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             {players.map((p) => (
               <div
                 key={p.id}
-                className="flex items-center gap-3 rounded-xl px-4 py-2.5 sm:px-5 sm:py-3 shadow-md bg-fk-paper border-[1.5px] border-fk-aurora"
-                style={{ boxShadow: "0 2px 8px rgba(15, 20, 25, 0.08)" }}
+                className="flex items-center gap-3 rounded-xl px-4 py-2.5 sm:px-5 sm:py-3 bg-card border border-border fk-card-shadow"
               >
                 <button
                   onClick={() => cycleIcon(p.id)}
@@ -158,12 +159,12 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
                 >
                   {p.icon}
                 </button>
-                <span className="flex-1 font-display font-semibold text-base sm:text-xl text-fk-charcoal">
+                <span className="flex-1 font-display font-semibold text-base sm:text-xl text-foreground">
                   {p.name}
                 </span>
                 <button
                   onClick={() => removePlayer(p.id)}
-                  className="text-lg sm:text-xl p-1.5 rounded-lg transition-all active:scale-90 hover:bg-black/5 text-fk-fjord"
+                  className="text-lg sm:text-xl p-1.5 rounded-lg transition-all active:scale-90 hover:bg-muted text-muted-foreground"
                 >
                   ✕
                 </button>
@@ -176,7 +177,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         <button
           onClick={() => onStart(players)}
           disabled={players.length < 3}
-          className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl transition-transform active:scale-[0.98] shadow-lg disabled:opacity-40 bg-fk-ink text-fk-paper"
+          className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl transition-transform active:scale-[0.98] bg-fk-ink text-fk-paper fk-card-shadow disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
         >
           Start spill ({players.length} {players.length === 1 ? "spiller" : "spillere"})
         </button>

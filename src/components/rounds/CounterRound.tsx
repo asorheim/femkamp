@@ -43,7 +43,7 @@ export function CounterRound({
         {players.map((p) => (
           <div
             key={p.id}
-            className="flex flex-col items-center gap-3 sm:gap-5 rounded-2xl border border-border bg-card p-5 sm:p-8 min-w-[110px] sm:min-w-[200px] md:min-w-[230px] shadow-lg shadow-black/20"
+            className="flex flex-col items-center gap-3 sm:gap-5 rounded-2xl border border-border bg-card p-5 sm:p-8 min-w-[110px] sm:min-w-[200px] md:min-w-[230px] fk-card-shadow"
           >
             <span className="text-sm sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
               {p.icon} {p.name}

@@ -7,10 +7,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 const QUEENS = [
-  { suit: "spades", symbol: "♠", label: "Spar dame", color: "border-violet-500" },
-  { suit: "hearts", symbol: "♥", label: "Hjerter dame", color: "border-red-500" },
-  { suit: "diamonds", symbol: "♦", label: "Ruter dame", color: "border-orange-500" },
-  { suit: "clubs", symbol: "♣", label: "Kløver dame", color: "border-green-500" },
+  { suit: "spades", symbol: "♠", label: "Spar dame", color: "border-fk-ink" },
+  { suit: "hearts", symbol: "♥", label: "Hjerter dame", color: "border-fk-berry" },
+  { suit: "diamonds", symbol: "♦", label: "Ruter dame", color: "border-fk-fjord" },
+  { suit: "clubs", symbol: "♣", label: "Kløver dame", color: "border-fk-aurora" },
 ] as const;
 
 interface QueenRoundProps {
@@ -72,7 +72,7 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
               onOpenChange={(open) => setOpenSuit(open ? suit : null)}
             >
               <PopoverTrigger
-                  className={`flex flex-col items-center gap-2 sm:gap-4 rounded-2xl border-2 p-5 sm:p-8 transition-all cursor-pointer shadow-lg shadow-black/20 hover:scale-[1.03] active:scale-95 ${
+                  className={`flex flex-col items-center gap-2 sm:gap-4 rounded-2xl border-2 p-5 sm:p-8 transition-all cursor-pointer fk-card-shadow hover:scale-[1.03] active:scale-95 ${
                     isAssigned
                       ? `${color} bg-card`
                       : "border-border bg-card/50 opacity-70 hover:opacity-90"

@@ -48,7 +48,7 @@ export function History({ onBack }: HistoryProps) {
             return (
               <div
                 key={game.id}
-                className="rounded-xl border border-border bg-card p-4 shadow-md shadow-black/10"
+                className="rounded-xl border border-border bg-card p-4 fk-card-shadow"
               >
                 <div className="flex items-start justify-between">
                   <div>

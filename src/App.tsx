@@ -77,7 +77,7 @@ function App() {
   const isLastRound = state.currentRound >= ROUND_ORDER.length - 1;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen">
       <Dialog open={showResumeDialog} onOpenChange={setShowResumeDialog}>
         <DialogContent>
           <DialogHeader>

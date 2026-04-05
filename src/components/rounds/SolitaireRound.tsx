@@ -46,7 +46,7 @@ export function SolitaireRound({
           return (
             <div
               key={p.id}
-              className="flex flex-col items-center gap-3 sm:gap-5 rounded-2xl border border-border bg-card p-4 sm:p-7 shadow-lg shadow-black/5 min-w-[140px] sm:min-w-[250px]"
+              className="flex flex-col items-center gap-3 sm:gap-5 rounded-2xl border border-border bg-card p-4 sm:p-7 fk-card-shadow min-w-[140px] sm:min-w-[250px]"
             >
               <span className="text-sm sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
                 {p.icon} {p.name}
