@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Player } from "../types";
+import { ROUND_ORDER, ROUND_LABELS } from "../types";
 import { assignIcon, nextIcon } from "../lib/icons";
 import { loadRecentPlayers } from "../lib/storage";
 
@@ -54,15 +55,18 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const availableRecent = recentPlayers.filter((r) => !isDuplicate(r.name));
 
-  // Five-pip ribbon under the title: numbered 1–5 in Fraunces serif.
-  // Reinforces the "five rounds" concept; round name on hover.
-  const rounds = [
-    { label: "1", name: "Pass" },
-    { label: "2", name: "Kløver" },
-    { label: "3", name: "Kabal" },
-    { label: "4", name: "Dame" },
-    { label: "5", name: "Grang" },
-  ];
+  // Round chips under the title: show the actual round names in order, so
+  // the setup screen is self-explanatory without relying on hover tooltips
+  // (which don't exist on mobile/tablet). "Pass · Kløver · Kabal · Dame · Grang"
+  // reads as a five-step agenda for the game.
+  const roundChips = ROUND_ORDER.map((type) => ROUND_LABELS[type].replace("runda", ""));
+
+  const canStart = players.length >= 3;
+  const startLabel = canStart
+    ? `Start spill (${players.length} ${players.length === 1 ? "spiller" : "spillere"})`
+    : players.length === 0
+      ? "Legg til minst 3 spillere"
+      : `Legg til ${3 - players.length} spiller${3 - players.length === 1 ? "" : "e"} til`;
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -81,17 +85,23 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             Femkamp
           </h1>
 
-          {/* Five-pip ribbon — numbered 1–5.
-              Ink numerals on aurora bg gives ~6:1 contrast (passes WCAG AA). */}
-          <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
-            {rounds.map((r, i) => (
-              <div
+          {/* Subtitle: one-line identity + the key scoring rule. Explains
+              what this app is without being twee. */}
+          <p className="mt-2 sm:mt-3 font-display italic text-sm sm:text-base md:text-lg text-muted-foreground">
+            Fem runder · lavest poeng vinner
+          </p>
+
+          {/* Round chips — the actual round names in playing order. Serves as
+              a self-explanatory agenda so users know what the game consists
+              of without needing to hover (hover doesn't exist on touch). */}
+          <div className="mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+            {roundChips.map((name, i) => (
+              <span
                 key={i}
-                className="flex items-center justify-center rounded-full font-display font-bold text-base sm:text-lg w-9 h-9 sm:w-11 sm:h-11 shadow-sm bg-fk-aurora text-fk-ink border border-fk-ink/10"
-                title={r.name}
+                className="inline-flex items-center rounded-full font-display font-semibold text-[11px] sm:text-sm px-2.5 py-1 sm:px-3.5 sm:py-1.5 bg-fk-aurora text-fk-ink border border-fk-ink/10"
               >
-                {r.label}
-              </div>
+                {name}
+              </span>
             ))}
           </div>
         </div>
@@ -154,10 +164,17 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
               >
                 <button
                   onClick={() => cycleIcon(p.id)}
-                  className="text-2xl sm:text-3xl hover:scale-110 active:scale-90 transition-transform"
-                  title="Bytt ikon"
+                  className="relative text-2xl sm:text-3xl hover:scale-110 active:scale-90 transition-transform"
+                  title="Trykk for å bytte ikon"
+                  aria-label="Bytt ikon"
                 >
                   {p.icon}
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-1 -right-1 text-[9px] sm:text-[10px] leading-none text-muted-foreground"
+                  >
+                    ↻
+                  </span>
                 </button>
                 <span className="flex-1 font-display font-semibold text-base sm:text-xl text-foreground">
                   {p.name}
@@ -176,10 +193,10 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         {/* Start button */}
         <button
           onClick={() => onStart(players)}
-          disabled={players.length < 3}
+          disabled={!canStart}
           className="w-full rounded-xl py-3.5 sm:py-5 font-display font-extrabold text-lg sm:text-2xl transition-transform active:scale-[0.98] bg-fk-ink text-fk-paper fk-card-shadow disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none"
         >
-          Start spill ({players.length} {players.length === 1 ? "spiller" : "spillere"})
+          {startLabel}
         </button>
       </div>
     </div>
