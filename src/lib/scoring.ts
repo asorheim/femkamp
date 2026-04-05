@@ -1,4 +1,61 @@
-import type { Player, RoundScore } from "../types";
+import type { Player, RoundScore, RoundType } from "../types";
+
+/**
+ * Expected "full" total for counter-based rounds:
+ * - pass / grand: all tricks in the deck distributed (floor(52 / players))
+ * - klover: all 13 clubs
+ */
+export function getExpectedCounterTotal(roundType: RoundType, playerCount: number): number | null {
+  if (roundType === "pass" || roundType === "grand") return Math.floor(52 / playerCount);
+  if (roundType === "klover") return 13;
+  return null;
+}
+
+/**
+ * Whether a round has enough data entered to advance. Kabal has no hard
+ * "done" state (0 is a valid perfect solitaire), so it always passes.
+ */
+export function isRoundComplete(round: RoundScore, playerCount: number): boolean {
+  switch (round.type) {
+    case "pass":
+    case "klover":
+    case "grand": {
+      const expected = getExpectedCounterTotal(round.type, playerCount);
+      if (expected === null) return true;
+      const total = Object.values(round.counts).reduce((a, b) => a + b, 0);
+      return total === expected;
+    }
+    case "dame":
+      return Object.keys(round.queenAssignments).length === 4;
+    case "kabal":
+      return true;
+  }
+}
+
+/**
+ * Short Norwegian hint explaining what is missing, or null if the round is complete.
+ */
+export function getRoundIncompleteHint(round: RoundScore, playerCount: number): string | null {
+  switch (round.type) {
+    case "pass":
+    case "klover":
+    case "grand": {
+      const expected = getExpectedCounterTotal(round.type, playerCount);
+      if (expected === null) return null;
+      const total = Object.values(round.counts).reduce((a, b) => a + b, 0);
+      if (total === expected) return null;
+      return `Mangler ${expected - total} av ${expected} stikk`;
+    }
+    case "dame": {
+      const assigned = Object.keys(round.queenAssignments).length;
+      if (assigned === 4) return null;
+      return `Mangler ${4 - assigned} av 4 damer`;
+    }
+    case "kabal":
+      return null;
+  }
+}
+
 
 export function calculateRoundScore(round: RoundScore, players: Player[]): Record<string, number> {
   const scores: Record<string, number> = {};

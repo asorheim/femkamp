@@ -128,3 +128,38 @@
     @apply font-sans;
     }
 }
+
+/* Fireworks celebration on the winner screen.
+   A .firework is a burst origin that rises, then its particles fan outward
+   using inline CSS vars --tx/--ty. Both animations share the same 2.4s cycle
+   so rise and burst stay in phase; --delay staggers each firework. */
+@keyframes firework-rise {
+  0%   { transform: translateY(80vh) scale(0.4); opacity: 0; }
+  5%   { opacity: 1; }
+  35%  { transform: translateY(0) scale(1); opacity: 1; }
+  90%  { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0; }
+}
+
+@keyframes firework-burst {
+  0%, 35% { transform: translate(0, 0) scale(1); opacity: 1; }
+  90%     { transform: translate(var(--tx), var(--ty)) scale(0.6); opacity: 0.8; }
+  100%    { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  animation: firework-rise 2.4s ease-out var(--delay, 0s) infinite;
+}
+
+.firework span {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color, #fbbf24);
+  box-shadow: 0 0 10px 2px var(--color, #fbbf24);
+  animation: firework-burst 2.4s ease-out var(--delay, 0s) infinite;
+}

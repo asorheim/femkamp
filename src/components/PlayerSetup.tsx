@@ -58,8 +58,11 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
   return (
     <div className="flex flex-col items-center gap-8 p-6 max-w-md mx-auto min-h-screen justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
-          Femkamp 🃏
+        <h1 className="text-4xl font-extrabold tracking-tight flex items-center justify-center gap-2">
+          <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+            Femkamp
+          </span>
+          <span>🃏</span>
         </h1>
         <p className="text-muted-foreground text-sm mt-2">Legg til 3+ spillere</p>
       </div>

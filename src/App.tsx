@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGameState } from "./hooks/useGameState";
 import { ROUND_ORDER } from "./types";
 import { PlayerSetup } from "./components/PlayerSetup";
@@ -27,6 +27,8 @@ function App() {
     currentRoundType,
     currentRoundScore,
     totalScores,
+    canAdvance,
+    incompleteHint,
     startGame,
     updateRound,
     goToRound,
@@ -38,6 +40,12 @@ function App() {
   const [showResumeDialog, setShowResumeDialog] = useState(
     () => state.status === "playing"
   );
+
+  // Scroll to top when switching rounds or game status, so users don't land
+  // halfway down the next screen.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [state.currentRound, state.status, screen]);
 
   // History screen
   if (screen === "history") {
@@ -133,24 +141,32 @@ function App() {
         />
       )}
 
-      <div className="flex justify-center gap-4 p-5 pb-10">
-        {state.currentRound > 0 && (
-          <Button
-            variant="secondary"
-            size="lg"
-            className="rounded-xl font-semibold transition-transform active:scale-95"
-            onClick={() => goToRound(state.currentRound - 1)}
-          >
-            ← Forrige
-          </Button>
+      <div className="flex flex-col items-center gap-3 p-5 pb-10 sm:pb-14">
+        {!canAdvance && incompleteHint && (
+          <p className="text-sm sm:text-lg md:text-xl text-amber-600 font-medium">
+            {incompleteHint}
+          </p>
         )}
-        <Button
-          size="lg"
-          className="rounded-xl font-semibold transition-transform active:scale-95 shadow-lg"
-          onClick={nextRound}
-        >
-          {isLastRound ? "Avslutt spill" : "Neste runde →"}
-        </Button>
+        <div className="flex justify-center gap-4 sm:gap-6">
+          {state.currentRound > 0 && (
+            <Button
+              variant="secondary"
+              size="lg"
+              className="rounded-xl font-semibold transition-transform active:scale-95 sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl"
+              onClick={() => goToRound(state.currentRound - 1)}
+            >
+              ← Forrige
+            </Button>
+          )}
+          <Button
+            size="lg"
+            className="rounded-xl font-semibold transition-transform active:scale-95 shadow-lg sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl"
+            onClick={nextRound}
+            disabled={!canAdvance}
+          >
+            {isLastRound ? "Avslutt spill" : "Neste runde →"}
+          </Button>
+        </div>
       </div>
     </div>
   );

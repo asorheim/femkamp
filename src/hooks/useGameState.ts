@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import type { GameState, Player, RoundScore, CompletedGame } from "../types";
 import { ROUND_ORDER } from "../types";
-import { calculateTotalScores, getWinners } from "../lib/scoring";
+import { calculateTotalScores, getWinners, isRoundComplete, getRoundIncompleteHint } from "../lib/scoring";
 import { saveGameState, loadGameState, clearGameState, saveCompletedGame, saveRecentPlayers } from "../lib/storage";
 
 function createInitialRounds(players: Player[]): RoundScore[] {
@@ -50,6 +50,10 @@ export function useGameState() {
 
   const nextRound = useCallback(() => {
     setState((prev) => {
+      const current = prev.rounds[prev.currentRound];
+      if (current && !isRoundComplete(current, prev.players.length)) {
+        return prev; // guarded by UI, but belt-and-braces
+      }
       if (prev.currentRound >= ROUND_ORDER.length - 1) {
         const totalScores = calculateTotalScores(prev.rounds, prev.players);
         const winners = getWinners(totalScores);
@@ -70,6 +74,12 @@ export function useGameState() {
   const currentRoundType = ROUND_ORDER[state.currentRound];
   const currentRoundScore = state.rounds[state.currentRound];
   const totalScores = calculateTotalScores(state.rounds, state.players);
+  const canAdvance = currentRoundScore
+    ? isRoundComplete(currentRoundScore, state.players.length)
+    : true;
+  const incompleteHint = currentRoundScore
+    ? getRoundIncompleteHint(currentRoundScore, state.players.length)
+    : null;
 
-  return { state, currentRoundType, currentRoundScore, totalScores, startGame, updateRound, goToRound, nextRound, newGame };
+  return { state, currentRoundType, currentRoundScore, totalScores, canAdvance, incompleteHint, startGame, updateRound, goToRound, nextRound, newGame };
 }
