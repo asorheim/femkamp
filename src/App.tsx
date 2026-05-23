@@ -81,10 +81,10 @@ function App() {
       <Dialog open={showResumeDialog} onOpenChange={setShowResumeDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Fortsette spill?</DialogTitle>
+            <DialogTitle>Halde fram med spelet?</DialogTitle>
             <DialogDescription>
-              Du har et pågående spill med{" "}
-              {state.players.map((p) => p.name).join(", ")}. Vil du fortsette
+              Du har eit pågåande spel med{" "}
+              {state.players.map((p) => p.name).join(", ")}. Vil du halde fram
               eller starte på nytt?
             </DialogDescription>
           </DialogHeader>
@@ -96,10 +96,10 @@ function App() {
                 setShowResumeDialog(false);
               }}
             >
-              Nytt spill
+              Nytt spel
             </Button>
             <Button onClick={() => setShowResumeDialog(false)}>
-              Fortsett
+              Hald fram
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -155,7 +155,7 @@ function App() {
               className="rounded-xl font-semibold transition-transform active:scale-95 h-11 px-5 text-base sm:h-12 sm:px-6 sm:text-lg lg:h-14 lg:px-8 lg:text-xl"
               onClick={() => goToRound(state.currentRound - 1)}
             >
-              ← Forrige
+              ← Førre
             </Button>
           )}
           <Button
@@ -164,7 +164,7 @@ function App() {
             onClick={nextRound}
             disabled={!canAdvance}
           >
-            {isLastRound ? "Avslutt spill" : "Neste runde →"}
+            {isLastRound ? "Avslutt spel" : "Neste runde →"}
           </Button>
         </div>
       </div>

@@ -45,12 +45,12 @@ export function getRoundIncompleteHint(round: RoundScore, playerCount: number): 
       const total = Object.values(round.counts).reduce((a, b) => a + b, 0);
       if (total === expected) return null;
       const unit = round.type === "klover" ? "kløver" : "stikk";
-      return `Mangler ${expected - total} av ${expected} ${unit}`;
+      return `Manglar ${expected - total} av ${expected} ${unit}`;
     }
     case "dame": {
       const assigned = Object.keys(round.queenAssignments).length;
       if (assigned === 4) return null;
-      return `Mangler ${4 - assigned} av 4 damer`;
+      return `Manglar ${4 - assigned} av 4 damer`;
     }
     case "kabal":
       return null;

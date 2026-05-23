@@ -40,9 +40,9 @@ export const ROUND_LABELS: Record<RoundType, string> = {
 };
 
 export const ROUND_DESCRIPTIONS: Record<RoundType, string> = {
-  pass: "Hver stikk = 1 poeng",
-  klover: "Hver kløver = 1 poeng",
-  dame: "Hver dame = 4 poeng",
-  grand: "Hver stikk = −1 poeng",
-  kabal: "Prikker + restkort = poeng",
+  pass: "Kvart stikk = 1 poeng",
+  klover: "Kvar kløver = 1 poeng",
+  dame: "Kvar dame = 4 poeng",
+  grand: "Kvart stikk = −1 poeng",
+  kabal: "Prikkar + restkort = poeng",
 };
