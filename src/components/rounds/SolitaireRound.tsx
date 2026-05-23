@@ -64,7 +64,7 @@ export function SolitaireRound({
                   −
                 </Button>
                 <div className="flex flex-col items-center min-w-[50px] sm:min-w-[60px] lg:min-w-[70px]">
-                  <span className="text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-medium uppercase tracking-wide">Prikker</span>
+                  <span className="text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-medium uppercase tracking-wide">Prikkar</span>
                   <span className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tabular-nums leading-none">{passCount}</span>
                 </div>
                 <Button

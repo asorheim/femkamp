@@ -92,7 +92,7 @@ export function GameSummary({
             </span>
           ))}
           <span className="bg-gradient-to-r from-fk-aurora to-fk-fjord bg-clip-text text-transparent">
-            vinner!
+            vinn!
           </span>
         </div>
         <p className="text-sm sm:text-xl md:text-2xl text-muted-foreground mt-1 sm:mt-3">
@@ -105,7 +105,7 @@ export function GameSummary({
         <table className="w-full text-sm sm:text-lg md:text-xl border-collapse">
           <thead>
             <tr className="border-b border-border text-muted-foreground">
-              <th className="text-left py-2 px-2 sm:py-4">Spiller</th>
+              <th className="text-left py-2 px-2 sm:py-4">Spelar</th>
               {ROUND_ORDER.map((type) => (
                 <th key={type} className="text-center py-2 px-2 sm:py-4">
                   {ROUND_LABELS[type].replace("runda", "")}
@@ -151,10 +151,10 @@ export function GameSummary({
       {/* Actions */}
       <div className="relative z-10 flex gap-3 sm:gap-5">
         <Button onClick={onNewGame} size="lg" className="sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl">
-          Nytt spill
+          Nytt spel
         </Button>
         <Button onClick={onShowHistory} variant="secondary" size="lg" className="sm:h-16 sm:px-8 sm:text-xl md:h-20 md:px-10 md:text-2xl">
-          Se historikk
+          Sjå historikk
         </Button>
       </div>
     </div>

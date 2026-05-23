@@ -58,7 +58,7 @@ export function Scoreboard({
               </div>
               {isDealer && (
                 <div className="mt-0.5 text-[10px] sm:text-xs lg:text-sm font-bold text-fk-ink leading-none whitespace-nowrap">
-                  🃏 gir
+                  🃏 gjev
                 </div>
               )}
             </div>

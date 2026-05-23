@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover";
 const QUEENS = [
   { suit: "spades", symbol: "♠", label: "Spar dame", color: "border-fk-ink" },
-  { suit: "hearts", symbol: "♥", label: "Hjerter dame", color: "border-fk-berry" },
+  { suit: "hearts", symbol: "♥", label: "Hjarter dame", color: "border-fk-berry" },
   { suit: "diamonds", symbol: "♦", label: "Ruter dame", color: "border-fk-fjord" },
   { suit: "clubs", symbol: "♣", label: "Kløver dame", color: "border-fk-aurora" },
 ] as const;
@@ -81,13 +81,13 @@ export function QueenRound({ players, roundScore, onUpdate }: QueenRoundProps) {
                   <span className="text-3xl sm:text-5xl lg:text-7xl leading-none">{symbol}</span>
                   <span className="text-xs sm:text-sm lg:text-xl text-muted-foreground font-medium">{label}</span>
                   <span className="text-xs sm:text-sm lg:text-xl font-semibold">
-                    {assigned ? `${assigned.icon} ${assigned.name}` : "Trykk for å velge"}
+                    {assigned ? `${assigned.icon} ${assigned.name}` : "Trykk for å velje"}
                   </span>
               </PopoverTrigger>
               <PopoverContent className="w-52 sm:w-72 p-2 sm:p-3">
                 <div className="flex flex-col gap-1">
                   <p className="text-xs sm:text-base text-muted-foreground mb-1 px-2">
-                    Hvem tok {label.toLowerCase()}?
+                    Kven tok {label.toLowerCase()}?
                   </p>
                   {players.map((p) => (
                     <button

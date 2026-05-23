@@ -68,10 +68,10 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const canStart = players.length >= 3;
   const startLabel = canStart
-    ? `Start spill (${players.length} ${players.length === 1 ? "spiller" : "spillere"})`
+    ? `Start spel (${players.length} ${players.length === 1 ? "spelar" : "spelarar"})`
     : players.length === 0
-      ? "Legg til minst 3 spillere"
-      : `Legg til ${3 - players.length} spiller${3 - players.length === 1 ? "" : "e"} til`;
+      ? "Legg til minst 3 spelarar"
+      : `Legg til ${3 - players.length} spelar${3 - players.length === 1 ? "" : "ar"} til`;
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -93,7 +93,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
           {/* Subtitle: one-line identity + the key scoring rule. Explains
               what this app is without being twee. */}
           <p className="mt-2 sm:mt-3 font-display italic text-sm sm:text-base md:text-lg text-muted-foreground">
-            Fem runder · lavest poeng vinner
+            Fem rundar · lågast poeng vinn
           </p>
 
           {/* Round chips — the actual round names in playing order. Serves as
@@ -118,7 +118,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             value={nameInput}
             onChange={(e) => setNameInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Spillernavn..."
+            placeholder="Spelarnamn..."
             className="flex-1 min-w-0 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg outline-none transition-all focus:ring-2 focus:ring-fk-aurora bg-card border border-border text-foreground fk-card-shadow"
             maxLength={20}
           />
@@ -134,7 +134,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         {/* Duplicate warning */}
         {nameInput.trim() && isDuplicate(nameInput.trim()) && (
           <p className="text-sm -mt-6 text-fk-berry">
-            Navnet er allerede lagt til
+            Namnet er allereie lagt til
           </p>
         )}
 
@@ -142,7 +142,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
         {availableRecent.length > 0 && (
           <div className="w-full">
             <p className="text-sm sm:text-base mb-2 sm:mb-3 font-display italic text-muted-foreground">
-              Nylige spillere:
+              Nylege spelarar:
             </p>
             <div className="flex flex-wrap gap-2 sm:gap-3">
               {availableRecent.map((r) => (
@@ -160,8 +160,8 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
                   <button
                     onClick={() => removeRecent(r.name)}
                     className="ml-0.5 p-1 rounded-full text-xs text-muted-foreground hover:text-destructive transition-all active:scale-90"
-                    title="Fjern fra nylige"
-                    aria-label={`Fjern ${r.name} fra nylige`}
+                    title="Fjern frå nylege"
+                    aria-label={`Fjern ${r.name} frå nylege`}
                   >
                     ✕
                   </button>
@@ -182,8 +182,8 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
                 <button
                   onClick={() => cycleIcon(p.id)}
                   className="relative text-2xl sm:text-3xl hover:scale-110 active:scale-90 transition-transform"
-                  title="Trykk for å bytte ikon"
-                  aria-label="Bytt ikon"
+                  title="Trykk for å byte ikon"
+                  aria-label="Byt ikon"
                 >
                   {p.icon}
                   <span

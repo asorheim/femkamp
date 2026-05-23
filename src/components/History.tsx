@@ -16,7 +16,7 @@ export function History({ onBack }: HistoryProps) {
   };
 
   const formatDate = (iso: string) => {
-    return new Date(iso).toLocaleDateString("nb-NO", {
+    return new Date(iso).toLocaleDateString("nn-NO", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -36,7 +36,7 @@ export function History({ onBack }: HistoryProps) {
 
       {games.length === 0 ? (
         <p className="text-center text-muted-foreground py-8">
-          Ingen spill ennå. Spill en runde femkamp!
+          Ingen spel enno. Spel ein runde femkamp!
         </p>
       ) : (
         <div className="space-y-3">
