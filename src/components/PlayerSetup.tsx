@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Player } from "../types";
 import { ROUND_ORDER, ROUND_LABELS } from "../types";
 import { assignIcon, nextIcon } from "../lib/icons";
-import { loadRecentPlayers } from "../lib/storage";
+import { loadRecentPlayers, removeRecentPlayer } from "../lib/storage";
 
 interface PlayerSetupProps {
   onStart: (players: Player[]) => void;
@@ -11,7 +11,7 @@ interface PlayerSetupProps {
 export function PlayerSetup({ onStart }: PlayerSetupProps) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [nameInput, setNameInput] = useState("");
-  const recentPlayers = loadRecentPlayers();
+  const [recentPlayers, setRecentPlayers] = useState<Player[]>(loadRecentPlayers);
 
   const isDuplicate = (name: string) =>
     players.some((p) => p.name.toLowerCase() === name.toLowerCase());
@@ -36,6 +36,11 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
 
   const removePlayer = (id: string) => {
     setPlayers(players.filter((p) => p.id !== id));
+  };
+
+  const removeRecent = (name: string) => {
+    removeRecentPlayer(name);
+    setRecentPlayers(loadRecentPlayers());
   };
 
   const cycleIcon = (id: string) => {
@@ -141,14 +146,26 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             </p>
             <div className="flex flex-wrap gap-2 sm:gap-3">
               {availableRecent.map((r) => (
-                <button
+                <div
                   key={r.id}
-                  onClick={() => addRecentPlayer(r)}
-                  className="flex items-center gap-1.5 rounded-full px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-base bg-card border border-border text-foreground fk-btn-lift"
+                  className="flex items-center gap-1 rounded-full pl-4 pr-2 py-2 sm:pl-5 sm:py-3 text-sm sm:text-base bg-card border border-border text-foreground fk-card-shadow"
                 >
-                  <span>{r.icon}</span>
-                  <span className="font-medium">{r.name}</span>
-                </button>
+                  <button
+                    onClick={() => addRecentPlayer(r)}
+                    className="flex items-center gap-1.5"
+                  >
+                    <span>{r.icon}</span>
+                    <span className="font-medium">{r.name}</span>
+                  </button>
+                  <button
+                    onClick={() => removeRecent(r.name)}
+                    className="ml-0.5 p-1 rounded-full text-xs text-muted-foreground hover:text-destructive transition-all active:scale-90"
+                    title="Fjern fra nylige"
+                    aria-label={`Fjern ${r.name} fra nylige`}
+                  >
+                    ✕
+                  </button>
+                </div>
               ))}
             </div>
           </div>
