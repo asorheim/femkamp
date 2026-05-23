@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Player, RoundScore } from "../types";
 import { ROUND_ORDER, ROUND_LABELS } from "../types";
 import { calculateRoundScore } from "../lib/scoring";
+import { getDealer } from "../lib/dealer";
 
 interface ScoreboardProps {
   players: Player[];
@@ -31,6 +32,8 @@ export function Scoreboard({
     return "text-foreground";
   };
 
+  const dealerId = getDealer(players, currentRound)?.id;
+
   return (
     <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-border shadow-sm">
       {/* Totals row */}
@@ -38,16 +41,29 @@ export function Scoreboard({
         onClick={() => setExpanded(!expanded)}
         className="flex flex-wrap justify-around w-full px-3 py-2 gap-2 sm:px-5 sm:py-3 sm:gap-3 lg:py-4"
       >
-        {players.map((p) => (
-          <div key={p.id} className="text-center min-w-[60px] sm:min-w-[90px] lg:min-w-[110px]">
-            <div className="text-xs sm:text-sm lg:text-xl text-muted-foreground font-semibold leading-tight">
-              {p.icon} {p.name}
+        {players.map((p) => {
+          const isDealer = p.id === dealerId;
+          return (
+            <div
+              key={p.id}
+              className={`text-center min-w-[60px] sm:min-w-[90px] lg:min-w-[110px] rounded-xl px-1.5 py-1 sm:px-2 transition-colors ${
+                isDealer ? "bg-fk-aurora/70 ring-1 ring-fk-ink/15" : ""
+              }`}
+            >
+              <div className="text-xs sm:text-sm lg:text-xl text-muted-foreground font-semibold leading-tight">
+                {p.icon} {p.name}
+              </div>
+              <div className={`text-2xl sm:text-3xl lg:text-5xl font-extrabold tabular-nums leading-none ${getColor(totalScores[p.id] ?? 0)}`}>
+                {totalScores[p.id] ?? 0}
+              </div>
+              {isDealer && (
+                <div className="mt-0.5 text-[10px] sm:text-xs lg:text-sm font-bold text-fk-ink leading-none whitespace-nowrap">
+                  🃏 gir
+                </div>
+              )}
             </div>
-            <div className={`text-2xl sm:text-3xl lg:text-5xl font-extrabold tabular-nums leading-none ${getColor(totalScores[p.id] ?? 0)}`}>
-              {totalScores[p.id] ?? 0}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </button>
 
       {/* Expanded breakdown */}
