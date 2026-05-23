@@ -79,13 +79,13 @@ export function GameSummary({
     <div className="relative flex flex-col items-center gap-8 p-6 sm:gap-12 sm:p-10 max-w-lg sm:max-w-3xl mx-auto min-h-screen justify-center">
       <Fireworks />
       {/* Winner announcement */}
-      <div className="relative text-center z-10">
+      <div className="relative text-center z-10 max-w-full">
         <div className="text-6xl sm:text-8xl md:text-9xl mb-3 sm:mb-5 animate-bounce">🏆</div>
         <div className="font-display flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-3xl sm:text-6xl md:text-7xl font-black tracking-tight">
           {winnerPlayers.map((p, i) => (
-            <span key={p.id} className="flex items-center gap-2">
+            <span key={p.id} className="flex items-center gap-2 min-w-0">
               <span>{p.icon}</span>
-              <span className="bg-gradient-to-r from-fk-aurora to-fk-fjord bg-clip-text text-transparent">
+              <span className="min-w-0 break-words bg-gradient-to-r from-fk-aurora to-fk-fjord bg-clip-text text-transparent">
                 {p.name}
               </span>
               {i < winnerPlayers.length - 1 && <span className="text-fk-ink">&</span>}
