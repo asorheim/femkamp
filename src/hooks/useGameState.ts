@@ -27,7 +27,7 @@ export function useGameState() {
   const [state, setState] = useState<GameState>(() => loadGameState() ?? INITIAL_STATE);
 
   useEffect(() => {
-    if (state.status !== "setup") { saveGameState(state); }
+    if (state.status === "playing") { saveGameState(state); }
   }, [state]);
 
   const startGame = useCallback((players: Player[]) => {
