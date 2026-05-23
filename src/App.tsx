@@ -85,7 +85,7 @@ function App() {
             <DialogDescription>
               Du har eit pågåande spel med{" "}
               {state.players.map((p) => p.name).join(", ")}. Vil du halde fram
-              eller starte på nytt?
+              eller starta på nytt?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex gap-2">
