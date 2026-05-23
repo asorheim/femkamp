@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Femkamp is a Norwegian-language scorekeeper (PWA-style, single-page) for a 5-round card game played on mobile. All state lives in `localStorage`; there is no backend. UI text is Norwegian — keep it that way when editing user-facing strings.
+Femkamp is a Nynorsk (Norwegian) scorekeeper (PWA-style, single-page) for a 5-round card game played on mobile. All state lives in `localStorage`; there is no backend. UI text is Nynorsk — keep it that way when editing user-facing strings.
 
 ## Commands
 
