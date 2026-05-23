@@ -119,7 +119,7 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
             onChange={(e) => setNameInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Spillernavn..."
-            className="flex-1 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg outline-none transition-all focus:ring-2 focus:ring-fk-aurora bg-card border border-border text-foreground fk-card-shadow"
+            className="flex-1 min-w-0 rounded-xl px-4 py-3 sm:py-4 text-base sm:text-lg outline-none transition-all focus:ring-2 focus:ring-fk-aurora bg-card border border-border text-foreground fk-card-shadow"
             maxLength={20}
           />
           <button
