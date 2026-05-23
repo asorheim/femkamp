@@ -61,3 +61,10 @@ export function saveRecentPlayers(players: Player[]): void {
   const merged = [...players, ...existing.filter((p) => !newNames.has(p.name.toLowerCase()))].slice(0, MAX_RECENT_PLAYERS);
   localStorage.setItem(KEYS.recentPlayers, JSON.stringify(merged));
 }
+
+export function removeRecentPlayer(name: string): void {
+  const remaining = loadRecentPlayers().filter(
+    (p) => p.name.toLowerCase() !== name.toLowerCase()
+  );
+  localStorage.setItem(KEYS.recentPlayers, JSON.stringify(remaining));
+}
