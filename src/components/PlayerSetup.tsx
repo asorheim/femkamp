@@ -148,11 +148,11 @@ export function PlayerSetup({ onStart }: PlayerSetupProps) {
               {availableRecent.map((r) => (
                 <div
                   key={r.id}
-                  className="flex items-center gap-1 rounded-full pl-4 pr-2 py-2 sm:pl-5 sm:py-3 text-sm sm:text-base bg-card border border-border text-foreground fk-card-shadow"
+                  className="flex items-center rounded-full pr-2 text-sm sm:text-base bg-card border border-border text-foreground fk-card-shadow"
                 >
                   <button
                     onClick={() => addRecentPlayer(r)}
-                    className="flex items-center gap-1.5"
+                    className="flex items-center gap-1.5 pl-4 pr-1 py-2 sm:pl-5 sm:py-3"
                   >
                     <span>{r.icon}</span>
                     <span className="font-medium">{r.name}</span>
