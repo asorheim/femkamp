@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover";
 const QUEENS = [
   { suit: "spades", symbol: "♠", label: "Spar dame", color: "border-fk-ink" },
-  { suit: "hearts", symbol: "♥", label: "Hjarter dame", color: "border-fk-berry" },
+  { suit: "hearts", symbol: "♥", label: "Hjerter dame", color: "border-fk-berry" },
   { suit: "diamonds", symbol: "♦", label: "Ruter dame", color: "border-fk-fjord" },
   { suit: "clubs", symbol: "♣", label: "Kløver dame", color: "border-fk-aurora" },
 ] as const;
